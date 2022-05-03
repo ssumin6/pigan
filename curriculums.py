@@ -44,6 +44,8 @@ Curriculum Schema:
 
 import math
 
+from regex import P
+
 def next_upsample_step(curriculum, current_step):
     # Return the epoch when it will next upsample
     current_metadata = extract_metadata(curriculum, current_step)
@@ -190,4 +192,40 @@ CATS = {
     'pos_lambda': 0,
     'last_back': False,
     'eval_last_back': True,
+}
+
+Multi_Obj = {
+    0: {'batch_size': 30, 'num_steps': 48, 'img_size': 32, 'batch_split': 1, 'gen_lr': 4e-5, 'disc_lr': 4e-4},
+    int(10e3): {'batch_size': 14, 'num_steps': 48, 'img_size': 64, 'batch_split': 2, 'gen_lr': 2e-5, 'disc_lr': 2e-4},
+    int(55e3): {},
+    
+    'dataset_path': '/home/server09/sumin_workspace/pi-GAN/NMR_Dataset/', ## TODO : CHANGE THIS 
+    'fov': 30,
+    'ray_start': 1.2,
+    'ray_end': 4.0,
+    'fade_steps': 10000,
+    'sample_dist': 'spherical_uniform',
+    'h_stddev': math.pi,
+    'v_stddev': math.pi/4 * 85/90,
+    'h_mean': math.pi*0.5,
+    'v_mean': math.pi/4 * 85/90,
+    'topk_interval': 1000,
+    'topk_v': 1,
+    'betas': (0, 0.9),
+    'unique_lr': False,
+    'weight_decay': 0,
+    'r1_lambda': 10,
+    'latent_dim': 256,
+    'grad_clip': 1,
+    'model': 'TALLSIREN',
+    'generator': 'ImplicitGenerator3d',
+    'discriminator': 'ProgressiveEncoderDiscriminator',
+    'dataset': 'dvr',
+    'white_back': True,
+    'clamp_mode': 'relu',
+    'z_dist': 'gaussian',
+    'hierarchical_sample': True,
+    'z_lambda': 0,
+    'pos_lambda': 0,
+    'learnable_dist': False,
 }
