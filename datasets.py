@@ -89,6 +89,7 @@ class DVRDataset(Dataset):
         img_size=None,
         scale_focal=True,
         max_imgs=100000,
+        **kwargs
     ):
         """
         :Original Setting : z_near=1.2, z_far=4.0,
@@ -164,6 +165,9 @@ class DVRDataset(Dataset):
         self.max_imgs = max_imgs
 
         self.lindisp = False
+        self.transform = transforms.Compose(
+                    [transforms.Resize((img_size, img_size), interpolation=0), transforms.ToTensor(), transforms.Normalize([0.5], [0.5])])
+
 
     def __len__(self):
         return len(self.all_objs)
@@ -171,7 +175,7 @@ class DVRDataset(Dataset):
     def __getitem__(self, index):
         # GetIndex
         X = PIL.Image.open(self.all_imgs[index])
-        # X = self.transform(X)
+        X = self.transform(X)
         return X, 0
 
 """
